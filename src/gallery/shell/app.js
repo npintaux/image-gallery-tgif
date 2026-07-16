@@ -232,17 +232,19 @@ function bindFilterEvents() {
             // Trigger smooth fade transition
             grid.classList.add("filtering");
 
-            // Fetch filtered photos collection from rule engine
-            const decision = await evaluateRequest("load_gallery");
+            // Fetch filtered photos from engine and wait exactly 350ms for transition fade-out
+            const [decision, _] = await Promise.all([
+                evaluateRequest("load_gallery"),
+                new Promise(resolve => setTimeout(resolve, 350))
+            ]);
             
-            // Allow 200ms for transition to complete before swapping DOM content
-            setTimeout(() => {
-                if (decision) {
-                    renderPhotos(decision.photos);
-                    updateDiagnostics("load_gallery", decision);
-                }
-                grid.classList.remove("filtering");
-            }, 200);
+            if (decision) {
+                renderPhotos(decision.photos);
+                updateDiagnostics("load_gallery", decision);
+            }
+            
+            // Fade back in smoothly
+            grid.classList.remove("filtering");
         });
     });
 }
