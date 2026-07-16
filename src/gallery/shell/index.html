@@ -27,7 +27,7 @@
             <div class="header-metrics">
                 <div class="metric-card">
                     <span class="metric-label">Active Rules</span>
-                    <span class="metric-value" id="active-rules-count">3</span>
+                    <span class="metric-value" id="active-rules-count">4</span>
                 </div>
                 <div class="metric-card">
                     <span class="metric-label">Interactive Items</span>
@@ -65,6 +65,21 @@
     <!-- Rule Trigger Toast Notifications -->
     <div class="toast-container" id="toast-container"></div>
 
+    <!-- Interactive Lightbox Overlay Modal [US2] -->
+    <div class="lightbox" id="lightbox-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+        <button class="lightbox-close" id="lightbox-close-btn" aria-label="Close lightbox">&times;</button>
+        <div class="lightbox-content">
+            <div class="lightbox-image-container">
+                <img src="" alt="" id="lightbox-img" class="lightbox-image">
+            </div>
+            <div class="lightbox-details">
+                <span class="lightbox-badge" id="lightbox-category">Category</span>
+                <h2 class="lightbox-title" id="lightbox-title">Photo Title</h2>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
+

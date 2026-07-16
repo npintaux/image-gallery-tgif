@@ -142,12 +142,76 @@ function renderPhotos(photos) {
             }
         });
 
+        // Wire up US2 Click / Lightbox Event Interaction
+        card.addEventListener("click", async (e) => {
+            if (e.target.closest(".like-btn")) {
+                e.stopPropagation();
+                return;
+            }
+
+            const decision = await evaluateRequest("click_photo", { photo_id: photo.id });
+            if (decision && decision.outcome === "OPEN_LIGHTBOX") {
+                openLightbox(decision.photos[0], decision);
+            }
+        });
+
         grid.appendChild(card);
+    });
+}
+
+// Open Lightbox view [US2]
+function openLightbox(photo, decision) {
+    const lightbox = document.getElementById("lightbox-overlay");
+    const img = document.getElementById("lightbox-img");
+    const category = document.getElementById("lightbox-category");
+    const title = document.getElementById("lightbox-title");
+
+    const imageUrl = IMAGE_FALLBACKS[photo.image_url] || photo.image_url;
+    img.src = imageUrl;
+    img.alt = photo.title;
+    category.textContent = photo.category;
+    title.textContent = photo.title;
+
+    lightbox.classList.add("active");
+    lightbox.setAttribute("aria-hidden", "false");
+    
+    updateDiagnostics("click_photo", decision);
+}
+
+// Close Lightbox view [US2]
+function closeLightbox() {
+    const lightbox = document.getElementById("lightbox-overlay");
+    lightbox.classList.remove("active");
+    lightbox.setAttribute("aria-hidden", "true");
+}
+
+// Bind Lightbox Close Interactions [US2]
+function bindLightboxEvents() {
+    const lightbox = document.getElementById("lightbox-overlay");
+    const closeBtn = document.getElementById("lightbox-close-btn");
+
+    closeBtn.addEventListener("click", closeLightbox);
+    
+    // Close on background overlay click
+    lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+    // Close on Escape key press
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && lightbox.classList.contains("active")) {
+            closeLightbox();
+        }
     });
 }
 
 // Initial application load
 async function initGallery() {
+    // Bind click/close handlers
+    bindLightboxEvents();
+
     // Evaluate gallery load request with current viewport size
     const decision = await evaluateRequest("load_gallery");
     if (decision) {
@@ -170,3 +234,4 @@ window.addEventListener("resize", () => {
 
 // Run app
 document.addEventListener("DOMContentLoaded", initGallery);
+
