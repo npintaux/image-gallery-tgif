@@ -22,14 +22,8 @@ at commit); `/specify` derives the content from the Issue — there is no exampl
 
 ## Workflow (skills)
 - `/specify #<n>` — Issue → proposed `SPEC.md` + tests, **STOP for approval**, then commit on `issue/<n>-<title>`.
-- `/implement R<n>` — one rule, TDD → green, **STOP for approval**. Never commits, never auto-advances.
-- `/commit` — separate, user-initiated, after approval. Conventional message `type(scope): summary [Rn] (#n)`.
+- `/implement` — Implement the entire issue (core + visual shell/IO together), TDD → green, **STOP for approval**. Never commits, never auto-advances.
+- `/commit` — separate, user-initiated, after approval. Conventional message `type(scope): summary (#n)`.
+- `/ship` — open PR, verify gates, squash-merge to close the issue.
 
 **One user story = one session.** No commit without explicit approval; no auto-advance to the next story.
-
-> [!IMPORTANT]
-> **Core/Shell Partitioning Rule:**
-> Given any user story that involves both logical decision-making (e.g., calculations, thresholds, state validations) and visual layouts (HTML, CSS, JS), the agent MUST split the story during `/specify` into two distinct GitHub issues:
->
-> 1. **`[Core] <Title> Logic`** — To be implemented as pure Python rules with 100% test coverage.
-> 2. **`[UI] <Title> Visual Shell`** — To be implemented as the presentation interface.
