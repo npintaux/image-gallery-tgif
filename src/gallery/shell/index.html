@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savant Photo Gallery</title>
+    <!-- Import Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Premium Glowing Background Orbs -->
+    <div class="bg-orb orb-primary"></div>
+    <div class="bg-orb orb-secondary"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="gallery-header">
+            <div class="header-main">
+                <span class="category-tag">Exhibition v1.0</span>
+                <h1>Savant Gallery</h1>
+                <p class="subtitle">A state-of-the-art interactive photo experience powered by the Antigravity Rule Engine.</p>
+            </div>
+            <!-- Global Metrics and Control Panel -->
+            <div class="header-metrics">
+                <div class="metric-card">
+                    <span class="metric-label">Active Rules</span>
+                    <span class="metric-value" id="active-rules-count">3</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Interactive Items</span>
+                    <span class="metric-value">6 Photos</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Rule Logs Panel / Diagnostic Sidebar (Extremely sleek, real-time feedback) -->
+        <section class="diagnostic-panel">
+            <div class="diagnostic-header">
+                <div class="status-indicator"></div>
+                <h3>Rule Engine Live Diagnostics</h3>
+            </div>
+            <div class="diagnostic-body">
+                <div class="diagnostic-item">
+                    <span class="diagnostic-time" id="eval-time">--:--:--</span>
+                    <span class="diagnostic-event">Last Event: <strong id="last-event">None</strong></span>
+                    <span class="diagnostic-rules">Matched Rules: <span id="matched-rules" class="rule-badge-container"></span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Grid Container -->
+        <main class="gallery-grid-wrapper">
+            <div class="gallery-grid" id="photo-grid">
+                <!-- Skeleton Loader placeholders while loading -->
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Rule Trigger Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
