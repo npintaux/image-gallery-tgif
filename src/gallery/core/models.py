@@ -23,6 +23,8 @@ class Request:
     event: str
     viewport_width: int
     photo_id: Optional[str] = None
+    category: Optional[str] = None
+
 
 
 @dataclass(frozen=True)

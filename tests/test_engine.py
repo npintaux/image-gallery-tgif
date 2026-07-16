@@ -50,6 +50,18 @@ def test_engine_evaluates_click_photo_through_r4():
     assert decision.photos[0].id == "photo_1"
 
 
+def test_engine_evaluates_load_gallery_through_r5_with_category():
+    """The engine should process a 'load_gallery' request with a specific category using R5."""
+    request = Request(event="load_gallery", category="Urban", viewport_width=1200)
+
+    decision = evaluate(request)
+
+    assert decision.outcome == "SERVE_PHOTOS"
+    assert decision.rule_ids == ["R1", "R5"]
+    assert len(decision.photos) > 0
+    assert all(photo.category == "Urban" for photo in decision.photos)
+
+
 def test_engine_raises_error_when_no_rules_apply():
     """The engine should raise a ValueError when no rules apply to the request."""
     request = Request(event="unknown_event", viewport_width=1200)
