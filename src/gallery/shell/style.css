@@ -635,3 +635,60 @@ h1 {
     }
 }
 
+/* CATEGORY FILTERS [US3] */
+.filters-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.filter-pills {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
+    padding: 6px;
+    border-radius: 40px;
+    display: flex;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.filter-btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-outfit);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 10px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    letter-spacing: 0.02em;
+}
+
+.filter-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.filter-btn.active {
+    color: #ffffff;
+    background: var(--accent);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+/* Smooth Fade transition on grid photos render */
+.gallery-grid {
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-grid.filtering {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+

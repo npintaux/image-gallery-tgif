@@ -13,6 +13,7 @@ The image gallery system consists of a logical Core and a Visual Shell. The Pyth
   - `event: str` — the event triggering the request (one of `"load_gallery"`, `"hover_photo"`, `"click_photo"`)
   - `photo_id: str` — optional identifier of a specific photo
   - `viewport_width: int` — the screen width in pixels
+  - `category: str` — optional category filter (one of `"All"`, `"Nature"`, `"Urban"`, `"Minimal"`)
 - **Photo** — the core photo model. Fields:
   - `id: str` — unique photo identifier
   - `title: str` — display name of the photo
@@ -63,14 +64,23 @@ The image gallery system consists of a logical Core and a Visual Shell. The Pyth
 - **Precedence:** Overrides none.
 - **Source:** issue #6
 
+### R5: Dynamic Category Filters
+
+- **Behavior:** On gallery load with a specified category (other than `"All"`), the Core filters the served default photos list to include only those whose category matches (case-insensitively).
+- **Example:** `evaluate(event="load_gallery", category="Nature", viewport_width=1200)` → `SERVE_PHOTOS` containing only Nature photos, `["R1", "R5"]`
+- **Precedence:** Overrides R1 on specific categories.
+- **Source:** issue #7
+
 ## Precedence order
 
 Rules are evaluated as an ordered list, with the highest priority first:
 
 1. R4 — Interactive Lightbox View
-2. R3 — Smooth Hover Micro-Animation
-3. R2 — Mobile Grid Collapse
-4. R1 — Served Default Photos on Load
+2. R5 — Dynamic Category Filters
+3. R3 — Smooth Hover Micro-Animation
+4. R2 — Mobile Grid Collapse
+5. R1 — Served Default Photos on Load
+
 
 
 ## Glossary

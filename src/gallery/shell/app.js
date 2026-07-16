@@ -13,7 +13,8 @@ const IMAGE_FALLBACKS = {
 // Global application state
 const state = {
     lastEvaluatedAt: null,
-    matchedRules: []
+    matchedRules: [],
+    activeCategory: "All"
 };
 
 // Toast notification helper
@@ -49,9 +50,11 @@ async function evaluateRequest(event, extraParams = {}) {
             body: JSON.stringify({
                 event: event,
                 viewport_width: viewportWidth,
+                category: state.activeCategory,
                 ...extraParams
             })
         });
+
 
         if (!response.ok) {
             throw new Error(`API returned error code ${response.status}`);
@@ -207,10 +210,48 @@ function bindLightboxEvents() {
     });
 }
 
+// Bind Dynamic Category Filter Buttons [US3]
+function bindFilterEvents() {
+    const filterBar = document.getElementById("filter-bar");
+    const grid = document.getElementById("photo-grid");
+    if (!filterBar) return;
+
+    const buttons = filterBar.querySelectorAll(".filter-btn");
+
+    buttons.forEach(btn => {
+        btn.addEventListener("click", async () => {
+            if (btn.classList.contains("active")) return;
+
+            // Highlight the active button visually
+            buttons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            // Update local state
+            state.activeCategory = btn.dataset.category;
+
+            // Trigger smooth fade transition
+            grid.classList.add("filtering");
+
+            // Fetch filtered photos collection from rule engine
+            const decision = await evaluateRequest("load_gallery");
+            
+            // Allow 200ms for transition to complete before swapping DOM content
+            setTimeout(() => {
+                if (decision) {
+                    renderPhotos(decision.photos);
+                    updateDiagnostics("load_gallery", decision);
+                }
+                grid.classList.remove("filtering");
+            }, 200);
+        });
+    });
+}
+
 // Initial application load
 async function initGallery() {
     // Bind click/close handlers
     bindLightboxEvents();
+    bindFilterEvents();
 
     // Evaluate gallery load request with current viewport size
     const decision = await evaluateRequest("load_gallery");

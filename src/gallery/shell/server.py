@@ -35,13 +35,16 @@ class GalleryShellRequestHandler(http.server.SimpleHTTPRequestHandler):
                 event = data.get("event", "load_gallery")
                 viewport_width = int(data.get("viewport_width", 1200))
                 photo_id = data.get("photo_id", None)
+                category = data.get("category", None)
 
                 # Instantiate request and evaluate using Python Core engine
                 core_request = Request(
                     event=event,
                     viewport_width=viewport_width,
                     photo_id=photo_id,
+                    category=category,
                 )
+
                 decision = evaluate(core_request)
 
                 # Serialize and return the decision

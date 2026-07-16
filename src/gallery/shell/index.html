@@ -27,7 +27,7 @@
             <div class="header-metrics">
                 <div class="metric-card">
                     <span class="metric-label">Active Rules</span>
-                    <span class="metric-value" id="active-rules-count">4</span>
+                    <span class="metric-value" id="active-rules-count">5</span>
                 </div>
                 <div class="metric-card">
                     <span class="metric-label">Interactive Items</span>
@@ -48,6 +48,16 @@
                     <span class="diagnostic-event">Last Event: <strong id="last-event">None</strong></span>
                     <span class="diagnostic-rules">Matched Rules: <span id="matched-rules" class="rule-badge-container"></span></span>
                 </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Category Filters [US3] -->
+        <section class="filters-container">
+            <div class="filter-pills" id="filter-bar">
+                <button class="filter-btn active" data-category="All">All</button>
+                <button class="filter-btn" data-category="Nature">Nature</button>
+                <button class="filter-btn" data-category="Urban">Urban</button>
+                <button class="filter-btn" data-category="Minimal">Minimal</button>
             </div>
         </section>
 
