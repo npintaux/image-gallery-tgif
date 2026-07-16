@@ -2,11 +2,14 @@
 
 from gallery.core.models import Request, Decision
 from gallery.core.rules.r1_default_photos import R1DefaultPhotos
+from gallery.core.rules.r2_mobile_collapse import R2MobileCollapse
 
 # Active rules list, ordered by precedence
 RULES = [
+    R2MobileCollapse(),
     R1DefaultPhotos(),
 ]
+
 
 
 def evaluate(request: Request) -> Decision:
