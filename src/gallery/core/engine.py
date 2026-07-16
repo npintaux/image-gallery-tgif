@@ -4,9 +4,11 @@ from gallery.core.models import Request, Decision
 from gallery.core.rules.r1_default_photos import R1DefaultPhotos
 from gallery.core.rules.r2_mobile_collapse import R2MobileCollapse
 from gallery.core.rules.r3_hover_animation import R3HoverAnimation
+from gallery.core.rules.r4_lightbox import R4Lightbox
 
 # Active rules list, ordered by precedence
 RULES = [
+    R4Lightbox(),
     R3HoverAnimation(),
     R2MobileCollapse(),
     R1DefaultPhotos(),

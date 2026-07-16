@@ -38,6 +38,18 @@ def test_engine_evaluates_hover_photo_through_r3():
     assert len(decision.photos) == 0
 
 
+def test_engine_evaluates_click_photo_through_r4():
+    """The engine should process a 'click_photo' request using R4."""
+    request = Request(event="click_photo", photo_id="photo_1", viewport_width=1200)
+
+    decision = evaluate(request)
+
+    assert decision.outcome == "OPEN_LIGHTBOX"
+    assert decision.rule_ids == ["R4"]
+    assert len(decision.photos) == 1
+    assert decision.photos[0].id == "photo_1"
+
+
 def test_engine_raises_error_when_no_rules_apply():
     """The engine should raise a ValueError when no rules apply to the request."""
     request = Request(event="unknown_event", viewport_width=1200)

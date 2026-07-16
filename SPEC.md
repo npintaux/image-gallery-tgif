@@ -10,7 +10,7 @@ The image gallery system consists of a logical Core and a Visual Shell. The Pyth
 ## Domain model
 
 - **Request** — the input. Fields:
-  - `event: str` — the event triggering the request (one of `"load_gallery"`, `"hover_photo"`)
+  - `event: str` — the event triggering the request (one of `"load_gallery"`, `"hover_photo"`, `"click_photo"`)
   - `photo_id: str` — optional identifier of a specific photo
   - `viewport_width: int` — the screen width in pixels
 - **Photo** — the core photo model. Fields:
@@ -20,8 +20,8 @@ The image gallery system consists of a logical Core and a Visual Shell. The Pyth
   - `image_url: str` — link to high-resolution asset
   - `likes: int` — current like count (defaults to `0`)
 - **Decision** — the output. Fields:
-  - `outcome: str` — the logical decision (one of `SERVE_PHOTOS`, `ZOOM_PHOTO`)
-  - `photos: list[Photo]` — the list of photos relevant to the outcome (populated for `SERVE_PHOTOS`)
+  - `outcome: str` — the logical decision (one of `"SERVE_PHOTOS"`, `"ZOOM_PHOTO"`, `"OPEN_LIGHTBOX"`)
+  - `photos: list[Photo]` — the list of photos relevant to the outcome (populated for `SERVE_PHOTOS`, or single photo in list for `OPEN_LIGHTBOX`)
   - `rule_ids: list[str]` — the rules that determined the outcome
   - `evaluated_at: str` — timestamp of evaluation
 
@@ -56,13 +56,22 @@ The image gallery system consists of a logical Core and a Visual Shell. The Pyth
 - **Precedence:** Overrides none.
 - **Source:** issue #10
 
+### R4: Interactive Lightbox View
+
+- **Behavior:** When a visitor clicks on any photo card, a full-screen dark semi-transparent overlay (Lightbox) opens, displaying the high-resolution image, title, and category badge. Clicking the "X" button or the background overlay closes it smoothly.
+- **Example:** `evaluate(event="click_photo", photo_id="photo_1", viewport_width=1200)` → `OPEN_LIGHTBOX` with the matched photo in `photos` array, `["R4"]`
+- **Precedence:** Overrides none.
+- **Source:** issue #6
+
 ## Precedence order
 
 Rules are evaluated as an ordered list, with the highest priority first:
 
-1. R3 — Smooth Hover Micro-Animation
-2. R2 — Mobile Grid Collapse
-3. R1 — Served Default Photos on Load
+1. R4 — Interactive Lightbox View
+2. R3 — Smooth Hover Micro-Animation
+3. R2 — Mobile Grid Collapse
+4. R1 — Served Default Photos on Load
+
 
 ## Glossary
 
